@@ -1,0 +1,29 @@
+{
+  "name": "ookami",
+  "version": "0.0.1",
+  "description": "Focused on music",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "files": [
+    "build/src"
+  ],
+  "repository": "https://github.com/KurozeroPB/Ookami.git",
+  "author": "KurozeroPB <root@kurozeropb.info>",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "bufferutil": "^4.0.1",
+    "eris": "^0.9.0",
+    "erlpack": "abalabahaha/erlpack",
+    "zlib-sync": "^0.1.4"
+  },
+  "devDependencies": {
+    "@types/node": "^11.12.0",
+    "gts": "^0.9.0",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.4000"
+  }
+}
