@@ -27,11 +27,9 @@ client.on("ready", async () => {
 
         console.info(`Logged in as ${client.user.username}`);
         console.info(`Loaded [${commands.size}] commands`);
-    } else {
-        console.info("Reconnected");
-    }
 
-    ready = true;
+        ready = true;
+    }
 });
 
 client.connect().catch(console.error);
