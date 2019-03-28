@@ -1,6 +1,6 @@
-import { Client } from "eris";
+import OokamiClient from "./OokamiClient";
 
-export { Client, Message, Collection } from "eris";
+export { Message, Collection } from "eris";
 
 export interface Settings {
     token: string;
@@ -10,7 +10,7 @@ export interface Settings {
 
 export interface HandlerOptions {
     settings: Settings;
-    client: Client;
+    client: OokamiClient;
 };
 
 export interface CommandOptions {

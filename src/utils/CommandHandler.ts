@@ -1,17 +1,10 @@
-import Command from "./Command";
+import OokamiClient from "./OokamiClient";
 import { promises as fs } from "fs";
-import {
-    Settings,
-    HandlerOptions,
-    Client,
-    Message,
-    Collection
-} from "./Interfaces";
+import { Settings, HandlerOptions, Message } from "./Interfaces";
 
 export default class CommandHandler {
     public settings: Settings;
-    public client: Client;
-    public commands: Collection<Command>;
+    public client: OokamiClient;
 
     /**
      * Command handler constructor
@@ -21,7 +14,6 @@ export default class CommandHandler {
     public constructor(options: HandlerOptions) {
         this.settings = options.settings;
         this.client = options.client;
-        this.commands = new Collection(Command);
     }
 
     /**
@@ -36,7 +28,7 @@ export default class CommandHandler {
         const parts = message.content.split(" ");
         const name = parts[0].slice(this.settings.prefix.length);
 
-        const command = this.commands.find((cmd) => cmd.name === name || cmd.options.aliases.indexOf(name) !== -1);
+        const command = this.client.commands.find((cmd) => cmd.name === name || cmd.options.aliases.indexOf(name) !== -1);
         if (!command) return false; // Command doesn't exist
 
         const args = parts.splice(1);
@@ -92,10 +84,10 @@ export default class CommandHandler {
             const cmd = await import(commandPath);
             const command = new cmd.default(category);
 
-            if (this.commands.has(command.name)) {
+            if (this.client.commands.has(command.name)) {
                 console.warn(`A command with the name ${command.name} already exists and has been skipped`);
             } else {
-                this.commands.add(command);
+                this.client.commands.add(command);
             }
         } catch (e) {
             console.warn(`${commandPath} - ${e.stack}`);

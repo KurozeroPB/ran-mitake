@@ -1,14 +1,10 @@
-import {
-    Settings,
-    CommandOptions,
-    Message,
-    Client
-} from "./Interfaces";
+import OokamiClient from "./OokamiClient";
+import { Settings, CommandOptions, Message } from "./Interfaces";
 
 export default class Command {
-    id: string;
-    name: string;
-    options: CommandOptions;
+    public id: string;
+    public name: string;
+    public options: CommandOptions;
 
     public constructor(name: string, options: CommandOptions) {
         this.id = name;
@@ -17,5 +13,5 @@ export default class Command {
     }
 
     // @ts-ignore
-    public async run(message: Message, args: string[], settings: Settings, client: Client): Promise<any>;
+    public async run(message: Message, args: string[], settings: Settings, client: OokamiClient): Promise<any>;
 }

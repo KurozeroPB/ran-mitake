@@ -1,10 +1,11 @@
-import { Client, Message } from "eris";
+import { Message } from "eris";
+import OokamiClient from "./utils/OokamiClient";
 import CommandHandler from "./utils/CommandHandler";
 import settings from "../settings";
 
 let ready = false;
 
-const client = new Client(settings.token);
+const client = new OokamiClient(settings.token);
 const commandHandler = new CommandHandler({ settings, client });
 
 client.on("messageCreate", async (message: Message) => {
@@ -39,7 +40,7 @@ client.on("ready", async () => {
         await commandHandler.loadCommands(`${__dirname}/commands`);
 
         console.info(`Logged in as ${client.user.username}`);
-        console.info(`Loaded [${commandHandler.commands.size}] commands`);
+        console.info(`Loaded [${client.commands.size}] commands`);
 
         ready = true;
     }
