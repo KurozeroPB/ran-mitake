@@ -1,9 +1,5 @@
 import Command from "../../utils/Command";
-import {
-    Settings,
-    Client,
-    Message
-} from "../../utils/Interfaces";
+import { Message } from "../../utils/Interfaces";
 
 export default class Ping extends Command {
     constructor() {
@@ -13,7 +9,7 @@ export default class Ping extends Command {
         })
     }
 
-    async run(message: Message, args: string[], settings: Settings, client: Client) {
+    async run(message: Message) {
         await message.channel.createMessage("Pong!");
     }
 }

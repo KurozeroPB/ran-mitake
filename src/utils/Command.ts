@@ -17,7 +17,5 @@ export default class Command {
     }
 
     // @ts-ignore
-    public async run(message: Message, args: string[], settings: Settings, client: Client) {
-        console.log("This should never log!");
-    }
+    public async run(message: Message, args: string[], settings: Settings, client: Client): Promise<any>;
 }

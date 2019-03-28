@@ -13,32 +13,41 @@ export default class CommandHandler {
     public client: Client;
     public commands: Collection<Command>;
 
+    /**
+     * Command handler constructor
+     * 
+     * @param {HandlerOptions} options Options for the command handler
+     */
     public constructor(options: HandlerOptions) {
         this.settings = options.settings;
         this.client = options.client;
         this.commands = new Collection(Command);
     }
 
-    public async handleCommand(message: Message, dm: boolean) {
+    /**
+     * Handle all commands
+     * 
+     * @param {Message} message The message send by the user
+     * @param {boolean} dm Whether the command was used in a dm
+     * 
+     * @returns {Promise<boolean>} Will be true if successful else false
+     */
+    public async handleCommand(message: Message, dm: boolean): Promise<boolean> {
         const parts = message.content.split(" ");
         const name = parts[0].slice(this.settings.prefix.length);
 
         const command = this.commands.find((cmd) => cmd.name === name || cmd.options.aliases.indexOf(name) !== -1);
-        if (!command) return false // Command doesn't exist
+        if (!command) return false; // Command doesn't exist
 
         const args = parts.splice(1);
 
         if (command.options.guildOnly && dm) {
-            try {
-                await message.channel.createMessage(`The command \`${command}\` can only be run in a guild.`);
-            } catch (e) {}
+            await message.channel.createMessage(`The command \`${command}\` can only be run in a guild.`);
             return false;
         }
 
         if (command.options.ownerOnly && message.author.id !== this.settings.owner) {
-            try {
-                await message.channel.createMessage("Only the owner can execute this command.");
-            } catch (e) {}
+            await message.channel.createMessage("Only the owner can execute this command.");
             return false;
         }
 
@@ -46,19 +55,25 @@ export default class CommandHandler {
             await command.run(message, args, this.settings, this.client);
             return true;
         } catch (error) {
-            try {
-                await message.channel.createMessage({
-                    embed: {
-                        color: 0xDC143C,
-                        description: error.toString()
-                    }
-                });
-            } catch (e) {}
+            await message.channel.createMessage({
+                embed: {
+                    color: 0xDC143C,
+                    description: error.toString()
+                }
+            });
             return false;
         }
+        
     }
 
-    public async loadCommands(commandDir: string) {
+    /**
+     * Load all commands
+     * 
+     * @param {string} commandDir The directory with all the commands
+     * 
+     * @returns {Promise<void>}
+     */
+    public async loadCommands(commandDir: string): Promise<void> {
         const dirs = await fs.readdir(commandDir);
 
         for (const dir of dirs) {
@@ -70,11 +85,9 @@ export default class CommandHandler {
                 }
             }
         }
-
-        return this.commands;
     }
 
-    private async _add(commandPath: string) {
+    private async _add(commandPath: string): Promise<void> {
         try {
             const cmd = await import(commandPath);
             const command = new cmd.default();
