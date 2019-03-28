@@ -81,16 +81,16 @@ export default class CommandHandler {
 
             for (const file of files) {
                 if (file.endsWith(".ts")) {
-                    await this._add(`${commandDir}/${dir}/${file}`);
+                    await this._add(`${commandDir}/${dir}/${file}`, dir);
                 }
             }
         }
     }
 
-    private async _add(commandPath: string): Promise<void> {
+    private async _add(commandPath: string, category: string): Promise<void> {
         try {
             const cmd = await import(commandPath);
-            const command = new cmd.default();
+            const command = new cmd.default(category);
 
             if (this.commands.has(command.name)) {
                 console.warn(`A command with the name ${command.name} already exists and has been skipped`);
