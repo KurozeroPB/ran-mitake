@@ -27,11 +27,10 @@ export default class CommandHandler {
     public async handleCommand(message: Message, dm: boolean): Promise<boolean> {
         const parts = message.content.split(" ");
         const name = parts[0].slice(this.settings.prefix.length);
+        const args = parts.splice(1);
 
         const command = this.client.commands.find((cmd) => cmd.name === name || cmd.options.aliases.indexOf(name) !== -1);
         if (!command) return false; // Command doesn't exist
-
-        const args = parts.splice(1);
 
         if (command.options.guildOnly && dm) {
             await message.channel.createMessage(`The command \`${command}\` can only be run in a guild.`);
@@ -55,7 +54,6 @@ export default class CommandHandler {
             });
             return false;
         }
-        
     }
 
     /**
@@ -85,12 +83,12 @@ export default class CommandHandler {
             const command = new cmd.default(category);
 
             if (this.client.commands.has(command.name)) {
-                console.warn(`A command with the name ${command.name} already exists and has been skipped`);
+                this.client.logger.warn("CommandHandler", `A command with the name ${command.name} already exists and has been skipped`);
             } else {
                 this.client.commands.add(command);
             }
         } catch (e) {
-            console.warn(`${commandPath} - ${e.stack}`);
+            this.client.logger.warn("CommandHandler", `${commandPath} - ${e.stack ? e.stack : e.toString()}`);
         }
     }
 }

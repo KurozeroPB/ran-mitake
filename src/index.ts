@@ -7,6 +7,7 @@ let ready = false;
 
 const client = new OokamiClient(settings.token);
 const commandHandler = new CommandHandler({ settings, client });
+const logger = client.logger;
 
 client.on("messageCreate", async (message: Message) => {
     if (!ready) return; // Bot is not ready yet
@@ -39,8 +40,8 @@ client.on("ready", async () => {
     if (!ready) {
         await commandHandler.loadCommands(`${__dirname}/commands`);
 
-        console.info(`Logged in as ${client.user.username}`);
-        console.info(`Loaded [${client.commands.size}] commands`);
+        logger.ready(`Logged in as ${client.user.username}`);
+        logger.ready(`Loaded [${client.commands.size}] commands`);
 
         ready = true;
     }
@@ -48,7 +49,7 @@ client.on("ready", async () => {
 
 process.on("SIGINT", () => {
     client.disconnect({ reconnect: false });
-    process.exit();
+    process.exit(0);
 });
 
-client.connect().catch(console.error);
+client.connect().catch((e) => logger.error("CONNECT", e));
