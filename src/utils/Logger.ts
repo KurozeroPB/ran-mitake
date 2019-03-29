@@ -46,6 +46,6 @@ export default class Logger {
             return chalk.blue.bold(logLevel);
         }
 
-        return chalk.white;
+        return chalk.white(logLevel);
     }
 }
