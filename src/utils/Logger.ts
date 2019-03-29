@@ -15,7 +15,7 @@ export default class Logger {
             level: "info",
             format: format.combine(
                 format.timestamp(),
-                format.printf((log) => `${moment(log.timestamp).format("DD/MM/YYYY, hh:mm:ss")} ${chalk.black.bgGreen(`[${log.label}]`)} ${this._color(log.level)}: ${log.message}`)
+                format.printf((log) => `${moment(log.timestamp).format("DD/MM/YYYY, hh:mm:ss")} ${chalk.black.bgGreen(`[${log.label}]`)} ${this._getColored(log.level)}: ${log.message}`)
             ),
             transports: [new transports.Console()]
         });
@@ -37,7 +37,7 @@ export default class Logger {
         this._log.error(error.stack ? error.stack : error.toString(), { label });
     }
 
-    private _color(logLevel: string) {
+    private _getColored(logLevel: string) {
         if (logLevel === "error") {
             return chalk.red.bold(logLevel);
         } else if (logLevel === "warn") {
