@@ -17,7 +17,7 @@ export default class Help extends Command {
         });
     }
 
-    public async run (message: Message, args: string[], settings: Settings, client: OokamiClient) {
+    public async run(message: Message, args: string[], settings: Settings, client: OokamiClient) {
         if (args.length === 0) {
             let messageQueue: string[] = [];
             let currentMessage = `\n# Here's a list of my commands. For more info do: ${settings.prefix}help <command>\n# Prefix: ${settings.prefix}\n`;
@@ -45,35 +45,31 @@ export default class Help extends Command {
             }, 300);
         } else {
             const command = this.checkForMatch(args[0], client, settings);
+            if (!command) return await message.channel.createMessage(`No command found with the name or alias \`${args[0]}\``);
             if (command.options.hidden === true) return; // Command is hidden
-            if (command.options.ownerOnly && message.author.id !== settings.owner) {
-                await message.channel.createMessage("This command can only be viewed and used by the owner.");
-                return;
-            }
+            if (command.options.ownerOnly && message.author.id !== settings.owner)
+                return await message.channel.createMessage("This command can only be viewed and used by the owner.");
 
-            if (command === null) {
-                await message.channel.createMessage(`Command \`${settings.prefix}${args[0]}\` not found`);
-            } else {
-                const helpMessage = "```asciidoc\n" +
-                    `[${upperCaseFirst(command.name)}]\n\n` +
-                    `= ${command.options.description} =\n\n` +
-                    `Aliases            ::  ${command.options.aliases.join(", ")}\n` +
-                    `Usage              ::  ${settings.prefix}${command.options.usage}\n` +
-                    `Guild Only         ::  ${command.options.guildOnly ? "yes" : "no"}\n` +
-                    `Owner Only         ::  ${command.options.ownerOnly ? "yes" : "no"}\n` +
-                    `Required Args      ::  ${command.options.requiredArgs}\n` +
-                    // `User Permissions   ::  ${command.userPermissions.join(", ")}\n` +
-                    // `Bot Permissions    ::  ${command.botPermissions.join(", ")}\n` +
-                    "\n" +
-                    "<> = required\n" +
-                    "[] = optional\n" +
-                    "```";
-                await message.channel.createMessage(helpMessage);
-            }
+            
+            const helpMessage = "```asciidoc\n" +
+                `[${upperCaseFirst(command.name)}]\n\n` +
+                `= ${command.options.description} =\n\n` +
+                `Aliases            ::  ${command.options.aliases.join(", ")}\n` +
+                `Usage              ::  ${settings.prefix}${command.options.usage}\n` +
+                `Guild Only         ::  ${command.options.guildOnly ? "yes" : "no"}\n` +
+                `Owner Only         ::  ${command.options.ownerOnly ? "yes" : "no"}\n` +
+                `Required Args      ::  ${command.options.requiredArgs}\n` +
+                // `User Permissions   ::  ${command.userPermissions.join(", ")}\n` +
+                // `Bot Permissions    ::  ${command.botPermissions.join(", ")}\n` +
+                "\n" +
+                "<> = required\n" +
+                "[] = optional\n" +
+                "```";
+            await message.channel.createMessage(helpMessage);
         }
     }
 
-    checkForMatch(name: string, client: OokamiClient, settings: Settings) {
+    checkForMatch(name: string, client: OokamiClient, settings: Settings): Command {
         if (name.startsWith(settings.prefix)) {
             name = name.substr(1);
         }
