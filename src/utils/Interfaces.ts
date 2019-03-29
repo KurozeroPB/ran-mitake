@@ -15,8 +15,11 @@ export interface HandlerOptions {
 
 export interface CommandOptions {
     aliases: string[];
-    descriptions: string;
+    description: string;
+    usage: string;
     category: string;
-    ownerOnly?: boolean;
-    guildOnly?: boolean;
+    requiredArgs: number;
+    hidden: boolean;
+    ownerOnly: boolean;
+    guildOnly: boolean;
 };

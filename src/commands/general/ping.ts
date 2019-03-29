@@ -5,8 +5,13 @@ export default class Ping extends Command {
     constructor(category: string) {
         super("ping", {
             aliases: ["pong"],
-            descriptions: "Testing the bot",
-            category: category
+            description: "Testing the bot",
+            usage: "ping",
+            category: category,
+            requiredArgs: 0,
+            hidden: false,
+            ownerOnly: false,
+            guildOnly: false
         })
     }
 
