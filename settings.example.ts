@@ -1,7 +1,12 @@
 import { Settings } from "./src/utils/Interfaces";
 
+const tokens = {
+    production: "",
+    development: ""
+};
+
 const settings: Settings = {
-    token: "",
+    token: process.env.NODE_ENV === "production" ? tokens.production : tokens.development,
     owner: "",
     prefix: ""
 };

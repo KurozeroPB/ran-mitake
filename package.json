@@ -1,15 +1,31 @@
 {
-  "name": "ookami",
+  "name": "ran-mitake",
   "version": "0.0.1",
   "description": "Discord bot focused on music",
   "main": "src/index.ts",
-  "repository": "https://github.com/KurozeroPB/Ookami.git",
-  "author": "KurozeroPB <root@kurozeropb.info>",
+  "homepage": "https://github.com/KurozeroPB/ran-mitake#readme",
+  "author": {
+    "email": "root@kurozeropb.info",
+    "name": "KurozeroPB",
+    "url": "https://kurozeropb.info"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KurozeroPB/ran-mitake.git"
+  },
+  "bugs": {
+    "email": "bugs@kurozeropb.info",
+    "url": "https://github.com/KurozeroPB/ran-mitake/issues"
+  },
+  "engines": {
+    "node": ">=10.x",
+    "yarn": ">=1.15.2"
+  },
   "license": "Apache-2.0",
-  "private": true,
+  "private": false,
   "scripts": {
-    "deploy": "pm2 start ecosystem.config.js",
-    "dev": "ts-node -r tsconfig-paths/register src/index.ts",
+    "deploy": "pm2 start ecosystem.config.js --env production",
+    "dev": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/index.ts",
     "test": "yarn dev",
     "check": "gts check",
     "clean": "gts clean",
@@ -27,6 +43,7 @@
   },
   "devDependencies": {
     "@types/node": "^11.12.0",
+    "cross-env": "^5.2.0",
     "gts": "^0.9.0",
     "ts-node": "^8.0.3",
     "tsconfig-paths": "^3.8.0",
