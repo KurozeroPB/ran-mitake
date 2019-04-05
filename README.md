@@ -1,5 +1,5 @@
-# Ookami
+# Ran Mitake
 Discord bot focused on music
 
 ## TODO
-https://github.com/KurozeroPB/Ookami/issues/1
+https://github.com/KurozeroPB/ran-mitake/issues/1
