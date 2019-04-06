@@ -1,11 +1,11 @@
 import { Message } from "eris";
-import OokamiClient from "./utils/OokamiClient";
+import RanClient from "./utils/RanClient";
 import CommandHandler from "./utils/CommandHandler";
 import settings from "../settings";
 
 let ready = false;
 
-const client = new OokamiClient(settings.token);
+const client = new RanClient({ settings, token: settings.token });
 const commandHandler = new CommandHandler({ settings, client });
 const logger = client.logger;
 

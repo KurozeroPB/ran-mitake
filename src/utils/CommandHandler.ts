@@ -1,10 +1,10 @@
-import OokamiClient from "./OokamiClient";
+import RanClient from "./RanClient";
 import { promises as fs } from "fs";
 import { Settings, HandlerOptions, Message } from "./Interfaces";
 
 export default class CommandHandler {
     public settings: Settings;
-    public client: OokamiClient;
+    public client: RanClient;
 
     /**
      * Command handler constructor

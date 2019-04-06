@@ -1,5 +1,5 @@
 import Command from "../../utils/Command";
-import OokamiClient from "../../utils/OokamiClient";
+import RanClient from "../../utils/RanClient";
 import { Settings, Message } from "../../utils/Interfaces";
 import { upperCaseFirst } from "../../utils/Helpers";
 
@@ -17,7 +17,7 @@ export default class Help extends Command {
         });
     }
 
-    public async run(message: Message, args: string[], settings: Settings, client: OokamiClient) {
+    public async run(message: Message, args: string[], settings: Settings, client: RanClient) {
         if (args.length === 0) {
             let messageQueue: string[] = [];
             let currentMessage = `\n# Here's a list of my commands. For more info do: ${settings.prefix}help <command>\n# Prefix: ${settings.prefix}\n`;
@@ -69,7 +69,7 @@ export default class Help extends Command {
         }
     }
 
-    checkForMatch(name: string, client: OokamiClient, settings: Settings): Command {
+    checkForMatch(name: string, client: RanClient, settings: Settings): Command {
         if (name.startsWith(settings.prefix)) {
             name = name.substr(1);
         }

@@ -1,4 +1,4 @@
-import OokamiClient from "./OokamiClient";
+import RanClient from "./RanClient";
 import { Settings, CommandOptions, Message } from "./Interfaces";
 
 export default class Command {
@@ -13,5 +13,5 @@ export default class Command {
     }
 
     // @ts-ignore
-    public async run(message: Message, args: string[], settings: Settings, client: OokamiClient): Promise<any>;
+    public async run(message: Message, args: string[], settings: Settings, client: RanClient): Promise<any>;
 }
