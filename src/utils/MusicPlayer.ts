@@ -22,7 +22,7 @@ export default class MusicPlayer {
     }
 
     public async play(msg: Message, args: string[]) {
-        const voiceState = msg.member? msg.member.voiceState : null;
+        const voiceState = msg.member ? msg.member.voiceState : null;
         if (!voiceState || !voiceState.channelID)
             return msg.channel.createMessage("\\❌ | You must in voice channel to play music");
         if (!args.length)
