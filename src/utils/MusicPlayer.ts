@@ -28,35 +28,35 @@ export default class MusicPlayer {
         if (!args.length)
             return msg.channel.createMessage("\\❌ | No query provided");
 
-		if (/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/.test(args[0])) {
-			const playlist = await this.youtube.getPlaylist(args[0]);
-			const videos = await playlist.getVideos();
-			for (const video of Object.values<any>(videos)) {
-				try {
-					const vid = await this.youtube.getVideoByID(video.id);
-					await this._handleVideo(vid, msg, voiceState, true);
-				} catch (e) {
+        if (/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/.test(args[0])) {
+            const playlist = await this.youtube.getPlaylist(args[0]);
+            const videos = await playlist.getVideos();
+            for (const video of Object.values<any>(videos)) {
+                try {
+                    const vid = await this.youtube.getVideoByID(video.id);
+                    await this._handleVideo(vid, msg, voiceState, true);
+                } catch (e) {
                     continue;
                 }
-			}
-			return await msg.channel.createMessage(`\\✅ | **${playlist.title}**: has been added to queue`);
+            }
+            return await msg.channel.createMessage(`\\✅ | **${playlist.title}**: has been added to queue`);
         }
 
-		try {
-			const video = await this.youtube.getVideo(args[0]);
-			return await this._handleVideo(video, msg, voiceState);
-		} catch (error) {
-			const videos = await this.youtube.searchVideos(args.join(" "), 1);
+        try {
+            const video = await this.youtube.getVideo(args[0]);
+            return await this._handleVideo(video, msg, voiceState);
+        } catch (error) {
+            const videos = await this.youtube.searchVideos(args.join(" "), 1);
             if (!videos.length)
                 return msg.channel.createMessage("\\❌ | No result found");
 
-			const video = await this.youtube.getVideoByID(videos[0].id);
-			return await this._handleVideo(video, msg, voiceState);
+            const video = await this.youtube.getVideoByID(videos[0].id);
+            return await this._handleVideo(video, msg, voiceState);
         }
     }
 
     public async queue(msg: Message) {
-		if (!this.songQueue.songs.length)
+        if (!this.songQueue.songs.length)
             return await msg.channel.createMessage("\\❌ | Im not playing anything right now");
 
         return await msg.channel.createMessage(
@@ -79,7 +79,7 @@ export default class MusicPlayer {
             return await msg.channel.createMessage("\\❌ | You need to be in a voice channel to loop/unloop a queue");
 
         this.songQueue.loop = !this.songQueue.loop;
-        return await msg.channel.createMessage(`\\✅ | ${this.songQueue.loop ? "loop" : "unloop" } current queue`);
+        return await msg.channel.createMessage(`\\✅ | ${this.songQueue.loop ? "loop" : "unloop"} current queue`);
     }
 
     public async skip(msg: Message) {
@@ -102,7 +102,7 @@ export default class MusicPlayer {
             return await msg.channel.createMessage("\\❌ | Im not playing anything right now");
         if (msg.member && !msg.member.voiceState.channelID)
             return await msg.channel.createMessage("\\❌ | You need to be in a voice channel to stop the queue");
-        
+
         this.songQueue.songs = [];
         const voiceConnection = this.client.voiceConnections.get(this.guild.id);
         if (voiceConnection) {
