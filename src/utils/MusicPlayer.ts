@@ -69,7 +69,7 @@ export default class MusicPlayer {
         if (!this.songQueue.songs.length)
             return await msg.channel.createMessage("\\❌ | Im not playing anything right now");
 
-        return await msg.channel.createMessage(`\\🎵 | Now playing **${this.songQueue.songs[0].title}**`);
+        return await msg.channel.createMessage(`\\🎵 | Now playing **${this.songQueue.songs[0].title}**\n<${this.songQueue.songs[0].url}>`);
     }
 
     public async loop(msg: Message): Promise<Message> {
