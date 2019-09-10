@@ -49,7 +49,7 @@ export default class CommandHandler {
             await message.channel.createMessage({
                 embed: {
                     color: 0xDC143C,
-                    description: error.toString()
+                    description: error.message ? error.message : error.toString()
                 }
             });
             return false;

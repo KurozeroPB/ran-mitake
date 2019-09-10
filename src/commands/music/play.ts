@@ -35,7 +35,7 @@ export default class Play extends Command {
             };
             const newPlayer = new MusicPlayer(options);
             client.players.add(newPlayer);
-            newPlayer.play(message, args);
+            await newPlayer.play(message, args);
         } else {
             await player.play(message, args);
         }

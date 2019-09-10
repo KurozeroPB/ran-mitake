@@ -21,6 +21,8 @@ export default class Loop extends Command {
         const player = client.players.get(channel.guild.id);
         if (player) {
             await player.playing(message);
+        } else {
+            await message.channel.createMessage("\\❌ | No active player");
         }
     }
 }
