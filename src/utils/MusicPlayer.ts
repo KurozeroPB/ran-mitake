@@ -24,7 +24,7 @@ export default class MusicPlayer {
     public async play(msg: Message, args: string[]): Promise<void | Message> {
         const voiceState = msg.member ? msg.member.voiceState : null;
         if (!voiceState || !voiceState.channelID)
-            return await msg.channel.createMessage("\\❌ | You must in voice channel to play music");
+            return await msg.channel.createMessage("\\❌ | You must be in a voice channel to play music");
         if (!args.length)
             return await msg.channel.createMessage("\\❌ | No query provided");
 
@@ -39,7 +39,7 @@ export default class MusicPlayer {
                     continue;
                 }
             }
-            return await msg.channel.createMessage(`\\✔️ | **${playlist.title}**: has been added to queue`);
+            return await msg.channel.createMessage(`\\✔️ | **${playlist.title}**: has been added to the queue`);
         }
 
         try {
@@ -93,7 +93,7 @@ export default class MusicPlayer {
             voiceConnection.stopPlaying();
             return await msg.channel.createMessage("\\✔️ | Song skipped");
         } else {
-            return await msg.channel.createMessage("\\❌ | Something went wrong");
+            return await msg.channel.createMessage("\\❌ | No voice connection found");
         }
     }
 
@@ -109,7 +109,7 @@ export default class MusicPlayer {
             voiceConnection.stopPlaying();
             return await msg.channel.createMessage("\\✔️ | Stopped current queue");
         } else {
-            return await msg.channel.createMessage("\\❌ | Something went wrong");
+            return await msg.channel.createMessage("\\❌ | No voice connection found");
         }
     }
 
@@ -124,7 +124,7 @@ export default class MusicPlayer {
         this.songQueue.songs.push(song);
 
         if (!hide)
-            await msg.channel.createMessage(`\\✔️ | **${song.title}** added to queue`);
+            await msg.channel.createMessage(`\\✔️ | **${song.title}** added to the queue`);
 
         return this._handlePlay(voiceState, this.songQueue.songs[0]); // Not sure but this might error with index out of range when using the stop command???
     }
